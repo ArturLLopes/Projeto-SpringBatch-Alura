@@ -10,11 +10,11 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
-import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -26,6 +26,7 @@ public class ImportacaoJobConfiguration {
     @Autowired
     private PlatformTransactionManager TransactionManager;
 
+    @Bean
     public Job job(Step passoInicial, JobRepository jobRepository) {
         return new JobBuilder("geracao-tickets", jobRepository)
                 .start(passoInicial)
@@ -38,6 +39,7 @@ public class ImportacaoJobConfiguration {
         return new StepBuilder("passo-inicial", jobRepository)
                 .<Importacao, Importacao>chunk(200, TransactionManager)
                 .reader(reader)
+                .processor(processor())
                 .writer(writer)
                 .build();
     }
@@ -46,12 +48,12 @@ public class ImportacaoJobConfiguration {
     public ItemReader<Importacao> reader() {
         return new FlatFileItemReaderBuilder<Importacao>()
                 .name("leitura-csv")
-                .resource(new FileSystemResource("files/dados.csv"))
+                .resource(new ClassPathResource("files/dados.csv"))
                 .comments("--")
                 .delimited()
                 .delimiter(";")
                 .names("cpf", "cliente", "nascimento", "evento", "data", "tipoIngresso", "valor")
-                .targetType(Importacao.class)
+                .fieldSetMapper(new ImportacaoMapper())
                 .build();
     }
 
@@ -67,4 +69,9 @@ public class ImportacaoJobConfiguration {
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
                 .build();
     }
+    @Bean
+    public ImportacaoProcessor processor() {
+        return new ImportacaoProcessor();
+    }
+
 }
