@@ -1,5 +1,6 @@
-package br.com.projeto.codetickets;
+package br.com.projeto.codetickets.batch;
 
+import br.com.projeto.codetickets.domain.Importacao;
 import org.springframework.batch.item.ItemProcessor;
 
 public class ImportacaoProcessor implements ItemProcessor<Importacao, Importacao> {

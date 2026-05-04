@@ -1,5 +1,6 @@
-package br.com.projeto.codetickets;
+package br.com.projeto.codetickets.batch;
 
+import br.com.projeto.codetickets.domain.Importacao;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.validation.BindException;

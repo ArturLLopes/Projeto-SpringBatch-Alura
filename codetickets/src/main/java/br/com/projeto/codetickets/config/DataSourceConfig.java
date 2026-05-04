@@ -1,4 +1,4 @@
-package br.com.projeto.codetickets;
+package br.com.projeto.codetickets.config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;

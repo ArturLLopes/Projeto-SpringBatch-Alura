@@ -1,5 +1,8 @@
-package br.com.projeto.codetickets;
+package br.com.projeto.codetickets.config;
 
+import br.com.projeto.codetickets.domain.Importacao;
+import br.com.projeto.codetickets.batch.ImportacaoMapper;
+import br.com.projeto.codetickets.batch.ImportacaoProcessor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;

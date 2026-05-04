@@ -1,4 +1,4 @@
-package br.com.projeto.codetickets;
+package br.com.projeto.codetickets.controller;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;

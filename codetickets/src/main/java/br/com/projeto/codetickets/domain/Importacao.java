@@ -1,4 +1,4 @@
-package br.com.projeto.codetickets;
+package br.com.projeto.codetickets.domain;
 
 import jakarta.persistence.*;
 
